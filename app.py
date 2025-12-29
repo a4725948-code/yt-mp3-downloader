@@ -35,14 +35,22 @@ def progress_hook(d):
 
 def download_mp3(url):
     ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-        'outtmpl': 'downloaded_audio.%(ext)s',
-        'progress_hooks': [progress_hook], # 綁定監視器
+    'format': 'bestaudio/best',
+    # 加入以下這幾行
+    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+    'nocheckcertificate': True,
+    'ignoreerrors': True,
+    'no_warnings': True,
+    'quiet': True,
+    'extract_flat': False,
+    # ----------------
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'outtmpl': 'downloaded_audio.%(ext)s',
+    'progress_hooks': [progress_hook],
     }
 
     try:
@@ -91,11 +99,21 @@ def download_mp3(url):
     # 設定 yt-dlp 參數
     ydl_opts = {
     'format': 'bestaudio/best',
-    'http_chunk_size': 1048576, # 限制區塊大小，有助於穩定連線
-    'nocheckcertificate': True, # 跳過 SSL 憑證檢查
-    'quiet': True,
+    # 加入以下這幾行
     'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-    # ... 原有的設定 ...
+    'nocheckcertificate': True,
+    'ignoreerrors': True,
+    'no_warnings': True,
+    'quiet': True,
+    'extract_flat': False,
+    # ----------------
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'outtmpl': 'downloaded_audio.%(ext)s',
+    'progress_hooks': [progress_hook],
     }
 
     try:
@@ -137,3 +155,4 @@ if st.button("開始處理"):
     else:
 
         st.warning("請先輸入網址！")
+
