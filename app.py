@@ -90,13 +90,12 @@ if 'updated' not in st.session_state:
 def download_mp3(url):
     # 設定 yt-dlp 參數
     ydl_opts = {
-        'format': 'bestaudio/best',  # 選擇最佳音質
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio', # 使用 FFmpeg 提取音訊
-            'preferredcodec': 'mp3',      # 轉為 mp3
-            'preferredquality': '192',    # 音質 192kbps
-        }],
-        'outtmpl': 'downloaded_audio.%(ext)s', # 暫存檔名
+    'format': 'bestaudio/best',
+    'http_chunk_size': 1048576, # 限制區塊大小，有助於穩定連線
+    'nocheckcertificate': True, # 跳過 SSL 憑證檢查
+    'quiet': True,
+    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+    # ... 原有的設定 ...
     }
 
     try:
@@ -136,4 +135,5 @@ if st.button("開始處理"):
             else:
                 st.error(f"發生錯誤：{title}")
     else:
+
         st.warning("請先輸入網址！")
